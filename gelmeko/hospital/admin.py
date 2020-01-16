@@ -42,10 +42,8 @@ class HospitalUserAdmin(admin.ModelAdmin):
         return my_urls + urls
 
     def hospital_view(self, request,hospital_id):
-        context = {
-            'data' : HospitalUser.objects.all(),
-            'available_apps' :  admin_site.get_app_list(request)
-        }
-        return TemplateResponse(request, 'admin/hospital_view.html', context=context)
+        context_data = admin_site.each_context(request)
+        context_data['data'] = HospitalUser.objects.all()
+        return TemplateResponse(request, 'admin/hospital_view.html', context=context_data)
 
 admin_site.register(HospitalUser,HospitalUserAdmin)

@@ -43,10 +43,8 @@ class VendorUserAdmin(admin.ModelAdmin):
         return my_urls + urls
 
     def vendor_view(self, request,vendor_id):
-        context = {
-            'data' : VendorUser.objects.all(),
-            'available_apps' :  admin_site.get_app_list(request)
-        }
-        return TemplateResponse(request, 'admin/vendor_view.html', context=context)
+        context_data = admin_site.each_context(request)
+        context_data['data'] = VendorUser.objects.all()
+        return TemplateResponse(request, 'admin/vendor_view.html', context=context_data)
 
 admin_site.register(VendorUser,VendorUserAdmin)
